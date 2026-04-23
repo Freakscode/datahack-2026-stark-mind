@@ -17,7 +17,7 @@ from app.agents.events import emit, get_model_by_id
 from app.agents.telemetry import compute_telemetry
 from app.db.models import Citation, Report
 
-GUARD_MODEL_ID = "claude-haiku-4-5"  # mock; calcula costo estimado
+GUARD_MODEL_ID = "gemini-2.5-flash"
 
 
 async def validate_citations(session: AsyncSession, query_id: UUID, report: Report) -> Report:

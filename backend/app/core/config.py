@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from functools import lru_cache
 
 from pydantic import Field
@@ -44,6 +45,29 @@ class Settings(BaseSettings):
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
 
+# Campos de Settings que librerías externas (LangChain, langchain-google-genai,
+# langchain-anthropic, etc.) esperan encontrar en `os.environ`. Pydantic Settings
+# los carga desde `.env` pero no los propaga al entorno del proceso; lo hacemos
+# explícito para que `os.environ.get("GOOGLE_API_KEY")` en el extractor funcione.
+_ENV_PROPAGATION: tuple[tuple[str, str], ...] = (
+    ("anthropic_api_key", "ANTHROPIC_API_KEY"),
+    ("openai_api_key", "OPENAI_API_KEY"),
+    ("google_api_key", "GOOGLE_API_KEY"),
+    ("voyage_api_key", "VOYAGE_API_KEY"),
+    ("ollama_base_url", "OLLAMA_BASE_URL"),
+    ("serpapi_key", "SERPAPI_KEY"),
+)
+
+
+def _propagate_to_env(settings: "Settings") -> None:
+    for attr, env in _ENV_PROPAGATION:
+        val = getattr(settings, attr, "")
+        if val and not os.environ.get(env):
+            os.environ[env] = val
+
+
 @lru_cache
 def get_settings() -> Settings:
-    return Settings()
+    settings = Settings()
+    _propagate_to_env(settings)
+    return settings

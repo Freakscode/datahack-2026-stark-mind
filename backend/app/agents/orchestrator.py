@@ -11,7 +11,7 @@ from app.agents.events import emit, get_model_by_id
 from app.agents.telemetry import compute_telemetry
 from app.db.models import Query
 
-ROUTER_MODEL_ID = "qwen2.5:7b-instruct"
+ROUTER_MODEL_ID = "gemini-2.5-flash"
 
 
 async def route_intent(session: AsyncSession, query_id: UUID) -> str:

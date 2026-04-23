@@ -149,9 +149,9 @@ def check_ollama_health(base_url: str = "http://localhost:11434", model: str | N
             )
 
 
-DEFAULT_CONFIG = LLMConfig(provider="ollama", model="gemma4:26b")
+DEFAULT_CONFIG = LLMConfig(provider="google_genai", model="gemini-2.5-flash")
 
-GEMINI_FALLBACK_MODEL = "gemini-1.5-flash"
+GEMINI_FALLBACK_MODEL = "gemini-2.5-flash"
 
 
 def get_chat_model_with_fallback(cfg: LLMConfig = DEFAULT_CONFIG) -> "BaseChatModel":
