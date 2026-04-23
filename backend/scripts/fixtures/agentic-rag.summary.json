@@ -1,0 +1,249 @@
+{
+  "id": "agentic-rag-survey-2026",
+  "extraction": {
+    "extracted_by": "human (Claude-assisted manual pass)",
+    "extracted_at": "2026-04-22",
+    "purpose": "ground truth #2 — stress-test del schema con un paper tipo survey (vs. el empírico de ReAct) antes de consolidar el contrato de datos del reader agent",
+    "notes": "lectura directa de pp. 1-40. pp. 41-42 son continuación de referencias, no aportan hechos nuevos. Las secciones §5.5-§5.7 (Adaptive, Graph-Based, Document Workflows) se cubren; §7 Applications y §10 Lessons Learned se sintetizan en lugar de enumerar.",
+    "schema_stress_observations": [
+      "El schema de 4 columnas (motivación/metodología/materiales/resultados) fue diseñado pensando en papers empíricos. Para un survey hay que reinterpretar: 'materiales' deja de ser 'base model + dataset' y pasa a ser 'scope del estudio' (qué literatura/frameworks/benchmarks inventaría).",
+      "'Resultados' en un survey no son mediciones empíricas sino hallazgos taxonómicos, trade-offs y lessons learned. Capturar esto sin números requiere bullets más descriptivos.",
+      "La riqueza del survey vive en tablas comparativas (Tables 1, 2, 3) — más que en prosa. El extractor automático debería priorizar tablas como fuente principal, no secundaria.",
+      "Este paper nombra explícitamente el stack de STARK-VIX: LangGraph, CrewAI, AutoGen, Amazon Bedrock, LlamaIndex, Vertex AI, Semantic Kernel, Pinecone. Para el pitch es la cita más sólida que existe hoy — justifica TODA la pila técnica.",
+      "Agent Cardinality + Control Structure + Autonomy + Knowledge Representation (Table 3, p. 33) son 4 dimensiones de taxonomía que el Orchestrator de STARK-VIX puede adoptar literalmente para clasificar modos de operación."
+    ]
+  },
+  "source": {
+    "arxiv_id": "2501.09136",
+    "version": "v4",
+    "submitted_date": "2026-04-01",
+    "venue": "arXiv preprint (not peer-reviewed)",
+    "year": 2026,
+    "title": "Agentic Retrieval-Augmented Generation: A Survey on Agentic RAG",
+    "authors": [
+      "Aditi Singh",
+      "Abul Ehtesham",
+      "Saket Kumar",
+      "Tala Talaei Khoei",
+      "Athanasios V. Vasilakos"
+    ],
+    "affiliations": [
+      "Cleveland State University (CS)",
+      "Kent State University",
+      "Northeastern University (Khoury College of CS)",
+      "Roux Institute at Northeastern University",
+      "University of Agder (UiA), Center for AI Research, Norway"
+    ],
+    "project_page": "https://github.com/asinghcsu/AgenticRAG-Survey",
+    "pdf_path": "backend/scripts/fixtures/agentic-rag.pdf",
+    "pages": 42,
+    "pages_main": 36,
+    "pages_references": "36-42"
+  },
+  "classification": {
+    "category": "Contexto",
+    "paper_type": "survey / revisión analítica",
+    "domain": "AI / Retrieval-Augmented Generation / Multi-Agent Systems",
+    "scope": [
+      "evolución de paradigmas RAG (Naïve → Advanced → Modular → Graph → Agentic)",
+      "taxonomía de sistemas Agentic RAG por cardinalidad de agentes, estructura de control, autonomía y representación del conocimiento",
+      "patrones agénticos (reflexión, planning, tool use, multi-agent collaboration)",
+      "patrones de workflow (prompt chaining, routing, paralelización, orchestrator-workers, evaluator-optimizer)",
+      "aplicaciones en salud, finanzas, legal, educación, customer support",
+      "herramientas/frameworks del ecosistema",
+      "benchmarks y datasets de evaluación",
+      "open research challenges"
+    ]
+  },
+  "key_metrics": {
+    "note": "survey — no hay métricas empíricas propias; los 'números' son conteos de literatura cubierta",
+    "references_cited": 104,
+    "rag_paradigms_reviewed": ["Naïve", "Advanced", "Modular", "Graph", "Agentic"],
+    "agentic_architectures_cataloged": [
+      "Single-Agent (Router)",
+      "Multi-Agent",
+      "Hierarchical",
+      "Agentic Corrective RAG",
+      "Adaptive RAG",
+      "Agent-G (Graph RAG)",
+      "GeAR (Graph-Enhanced Agent)",
+      "Agentic Document Workflows (ADW)"
+    ],
+    "agentic_patterns_enumerated": ["Reflection", "Planning", "Tool Use", "Multi-Agent Collaboration"],
+    "workflow_patterns_enumerated": ["Prompt Chaining", "Routing", "Parallelization", "Orchestrator-Workers", "Evaluator-Optimizer"],
+    "frameworks_named": [
+      "LangChain / LangGraph",
+      "LlamaIndex (+ ADW, LlamaCloud)",
+      "CrewAI",
+      "AutoGen / AG2",
+      "OpenAI Swarm",
+      "Amazon Bedrock",
+      "Google Vertex AI",
+      "Microsoft Semantic Kernel",
+      "IBM watsonx.ai (Granite-3-8B-Instruct)",
+      "Hugging Face Transformers + Qdrant",
+      "Neo4j + Pinecone/Weaviate/Milvus"
+    ],
+    "benchmarks_referenced": [
+      "BEIR", "MS MARCO", "TREC-DL", "MuSiQue", "2WikiMultihopQA", "AgentG", "HotpotQA", "RAGBench", "BERGEN", "FlashRAG", "GNN-RAG"
+    ],
+    "comparative_tables": ["Table 1 (5 paradigmas × 3 columnas)", "Table 2 (3 arquitecturas × 10 features)", "Table 3 (4 tipos × 12 dimensiones taxonómicas)"]
+  },
+  "benefit": "Cita más valiosa que podemos poner hoy en el pitch: valida literalmente TODA la pila técnica de STARK-VIX. Menciona explícitamente LangGraph, CrewAI, AutoGen, Amazon Bedrock, LlamaIndex y Vertex AI como frameworks de referencia del campo. Justifica la arquitectura jerárquica master-agent (§5.3) que es exactamente la de STARK-VIX. La Tabla 3 (§10) da 12 dimensiones taxonómicas que el Orchestrator puede adoptar para clasificar sus modos. §10.7 ('responsible deployment' → explainability, traceability, auditability como first-class goals) respalda directamente el dog-whistle de citas trazables con anchor que estamos vendiendo. Paper obligatorio en §Contexto y §Arquitectura del informe.",
+  "summary": {
+    "motivation": [
+      {
+        "text": "Los LLMs dependen de datos de entrenamiento estáticos — generan respuestas desactualizadas, inventadas o incapaces de adaptarse a información en tiempo real.",
+        "anchor": "§1 / Abstract"
+      },
+      {
+        "text": "RAG tradicional mitiga el problema integrando recuperación externa, pero sus pipelines son estáticos y lineales: no soportan razonamiento multi-paso, refinamiento iterativo ni decisión dinámica sobre cuándo recuperar.",
+        "anchor": "§1 / §2.4"
+      },
+      {
+        "text": "El campo Agentic RAG está fragmentado — arquitecturas diversas, terminología inconsistente, comparaciones limitadas, y no existe aún una taxonomía unificada que organice los sistemas por dimensiones de diseño.",
+        "anchor": "§1"
+      },
+      {
+        "text": "La convergencia entre RAG y agentic AI abre un nuevo paradigma: tratar la recuperación y el razonamiento como tareas agénticas coordinadas por una capa de control explícita que decide cuándo buscar, cómo reformular, cuándo validar y cuándo parar.",
+        "anchor": "§1"
+      }
+    ],
+    "methodology": [
+      {
+        "text": "Revisión analítica narrativa (no systematic review formal): trazar la evolución de paradigmas RAG, sistematizar patrones agénticos, construir taxonomía y extraer lessons learned de casos reales.",
+        "anchor": "§1 (estructura en 13 secciones)"
+      },
+      {
+        "text": "Taxonomía propuesta a lo largo de 4 dimensiones principales: cardinalidad de agentes, estructura de control, autonomía y representación del conocimiento.",
+        "anchor": "§5 / Table 3"
+      },
+      {
+        "text": "Comparativa de paradigmas RAG en Table 1 con 3 ejes: Key Features × Strengths × (limitaciones descritas en prosa).",
+        "anchor": "Table 1 p. 8"
+      },
+      {
+        "text": "Comparativa Traditional RAG vs Agentic RAG vs Agentic Document Workflows (ADW) a lo largo de 10 features (focus, context maintenance, dynamic adaptability, orchestration, tools/APIs, scalability, complex reasoning, applications, strengths, challenges).",
+        "anchor": "Table 2 p. 29"
+      },
+      {
+        "text": "Taxonomy-Driven Comparison final (Table 3) mapea Single-Agent / Multi-Agent / Hierarchical & Corrective / Graph-Based a 12 dimensiones operativas (agent cardinality, control, knowledge, reasoning mode & depth, retrieval adaptivity, scalability, latency, engineering complexity, best-fit).",
+        "anchor": "Table 3 p. 33"
+      },
+      {
+        "text": "Enumeración de casos de uso concretos por arquitectura (customer support, multi-domain research assistant, financial analysis, academic research assistant, multi-hop QA, invoice workflow, healthcare diagnostics) — cada caso con prompt, system process y respuesta integrada.",
+        "anchor": "§5 (uso de bloques 'Use Case' embebidos)"
+      },
+      {
+        "text": "Síntesis de 7 lessons learned (§10) que cierran el survey con guidance práctica de diseño.",
+        "anchor": "§10"
+      }
+    ],
+    "materials": [
+      {
+        "text": "Scope de literatura: 104 referencias cubriendo 2018-2026, con énfasis fuerte en 2024-2026.",
+        "anchor": "References pp. 36-42"
+      },
+      {
+        "text": "Frameworks inventariados: LangChain/LangGraph, LlamaIndex (+ADW), CrewAI, AutoGen/AG2, OpenAI Swarm, Amazon Bedrock, Google Vertex AI, Microsoft Semantic Kernel, IBM watsonx.ai (Granite-3-8B), Hugging Face + Qdrant, Neo4j + Pinecone/Weaviate/Milvus.",
+        "anchor": "§8"
+      },
+      {
+        "text": "Patrones agénticos cubiertos: Reflection (Self-Refine, Reflexion, CRITIC), Planning, Tool Use, Multi-Agent Collaboration.",
+        "anchor": "§3 (Figs. 7-10)"
+      },
+      {
+        "text": "Patrones de workflow LLM-based: Prompt Chaining, Routing, Parallelization, Orchestrator-Workers, Evaluator-Optimizer.",
+        "anchor": "§4 (Figs. 11-15)"
+      },
+      {
+        "text": "Arquitecturas Agentic RAG catalogadas: Single-Agent Router, Multi-Agent, Hierarchical, Corrective, Adaptive, Agent-G (Graph), GeAR (Graph-Enhanced Agent), Agentic Document Workflows (ADW).",
+        "anchor": "§5 (Figs. 16-23)"
+      },
+      {
+        "text": "Benchmarks y datasets referenciados para evaluación: BEIR, MS MARCO, TREC-DL, MuSiQue, 2WikiMultihopQA, AgentG, HotpotQA, RAGBench, BERGEN, FlashRAG, GNN-RAG. Tabla 4/5 mapea tareas (single-hop QA, multi-hop QA, long-form QA, domain QA, graph QA, reasoning, summarization, fact-checking, code search, robustness) a datasets.",
+        "anchor": "§11 / Tables 4-5"
+      },
+      {
+        "text": "Casos reales citados: Twitch Ad Sales con Bedrock (ref. 39), Patient Case Summary con LlamaCloud (ref. 40), Contract Review (ref. 41), Auto Insurance Claims (ref. 42), Research Paper Generation (ref. 43), ServiceNow P1 con Semantic Kernel.",
+        "anchor": "§7 / §8"
+      }
+    ],
+    "results": [
+      {
+        "text": "Agentic RAG transciende las limitaciones de RAG tradicional (flujos estáticos, razonamiento limitado, escalabilidad cuestionable) embebiendo agentes autónomos que dinámicamente gestionan estrategias de recuperación, refinan contexto iterativamente y adaptan workflows.",
+        "anchor": "§2.5 / Abstract"
+      },
+      {
+        "text": "Ningún paradigma domina: la elección depende de complejidad de tarea, latencia tolerable, calidad de conocimiento, riesgos regulatorios. Traditional RAG = simple/rápido; Agentic RAG = razonamiento multi-dominio; ADW = workflows document-centric end-to-end.",
+        "anchor": "Table 2 / §6"
+      },
+      {
+        "text": "Arquitectura jerárquica (Master Agent + sub-agentes) gana en escenarios high-stakes donde reliability y strategic oversight pesan más que latencia.",
+        "anchor": "§5.3 / Table 3"
+      },
+      {
+        "text": "Graph-Based RAG (Agent-G, GeAR) destaca en dominios con conocimiento estructurado (salud, legal, relaciones entity-entity) pero hereda la dependencia de calidad del grafo — fracasa cuando los grafos son ruidosos o incompletos.",
+        "anchor": "§5.6 / Table 3"
+      },
+      {
+        "text": "Lesson aprendida: 'la calidad de la recuperación sigue siendo el cuello de botella primario' — inversión en pipelines de retrieval robustos debe preceder a la complejidad agéntica (§10.3).",
+        "anchor": "§10.3"
+      },
+      {
+        "text": "Lesson aprendida: 'la autonomía del agente requiere restricciones explícitas' — sin horizons de planning acotados, políticas de tool access y criterios de parada explícitos, la autonomía produce loops redundantes o objetivos desalineados (§10.4).",
+        "anchor": "§10.4"
+      },
+      {
+        "text": "Lesson aprendida: 'la evaluación debe medir proceso, no solo outputs' — métricas output-level (answer correctness, retrieval accuracy) son insuficientes; se necesitan métricas de trayectoria de razonamiento, profundidad de planning, adaptabilidad, robustez bajo retrieval ruidoso, y cost-efficiency (§10.5, §12.2).",
+        "anchor": "§10.5 / §12.2"
+      },
+      {
+        "text": "Open challenges destacados: (1) coordinación y comportamiento emergente en multi-agente (§12.1), (2) gestión de memoria a largo plazo con trade-off persistencia-vs-drift (§12.3), (3) costo/eficiencia con invocaciones iterativas (§12.4), (4) safety/trust/governance con tracing de responsabilidad (§12.5), (5) generalización cross-domain (§12.6).",
+        "anchor": "§12"
+      },
+      {
+        "text": "Deployment responsable: explainability, traceability y auditability deben ser first-class design goals, especialmente en aplicaciones high-stakes (§10.7).",
+        "anchor": "§10.7"
+      }
+    ]
+  },
+  "figures_inventory": [
+    { "id": "Fig. 1",  "page": 3,  "caption": "Overview of Agentic RAG (framework+stack, RAG paradigm, challenges, agent, agentic patterns, workflow patterns, taxonomy, benefits)", "useful_for": "mapa mental del campo completo — primera figura a incluir si presentamos el survey" },
+    { "id": "Fig. 2",  "page": 4,  "caption": "Core Components of RAG (Retrieval → Augmentation → Generation)", "useful_for": "explicar RAG base antes de la capa agéntica" },
+    { "id": "Fig. 3",  "page": 4,  "caption": "Naïve RAG: keyword retrieval + embedding + vector DB", "useful_for": "contraste con paradigmas más avanzados" },
+    { "id": "Fig. 4",  "page": 5,  "caption": "Advanced RAG: pre-retrieval + indexing + retrieval + post-retrieval + prompt", "useful_for": "mostrar evolución hacia dense/re-ranking/multi-hop" },
+    { "id": "Fig. 5",  "page": 6,  "caption": "Modular RAG: fusion/demonstrate/routing/memory + módulos Retrieve/Read/Re-rank/Rewrite/Predict/Search", "useful_for": "justificar arquitectura modular de STARK-VIX" },
+    { "id": "Fig. 6",  "page": 7,  "caption": "Graph RAG: graph extraction + knowledge graph + vector DB + prompt augmentation", "useful_for": "opción si incorporamos pgvector con grafos" },
+    { "id": "Fig. 7",  "page": 9,  "caption": "Overview of AI Agents (Memory short/long + Planning + Tools + Task/Role)", "useful_for": "cita fundacional de componentes de un agente — replicable en el Orchestrator" },
+    { "id": "Fig. 8",  "page": 10, "caption": "Agentic Self-Reflection (Response → Reflect → Critique → Merits)", "useful_for": "patrón de reflexión replicable en el Citation Guard" },
+    { "id": "Fig. 9",  "page": 10, "caption": "Agentic Planning + Tool Use (Memory-Augmented Planning / Task Decomposition / External Planner / Plan Selection)", "useful_for": "justificar la lógica del Reader+Synthesizer" },
+    { "id": "Fig. 10", "page": 11, "caption": "MultiAgent Overview (Query → Agent 1 ↔ Agent 2, Agent 3 → Response)", "useful_for": "arquitectura canónica multi-agente" },
+    { "id": "Fig. 16", "page": 15, "caption": "Single-Agent Agentic RAG (Router con Vector Search X/Y + Web Search)", "useful_for": "baseline de arquitectura — nuestro caso es más complejo pero aquí está la referencia simple" },
+    { "id": "Fig. 17", "page": 17, "caption": "Multi-Agent Agentic RAG (Retrieval Agents X/Y/Z → Vector Search / Web / Mail-Chat)", "useful_for": "escalado horizontal de retrieval especializado" },
+    { "id": "Fig. 18", "page": 18, "caption": "Hierarchical Agentic RAG (Master Agent → Sub-Agent X/Y/Z)", "useful_for": "arquitectura de STARK-VIX — debe aparecer en el pitch" },
+    { "id": "Fig. 19", "page": 20, "caption": "Agentic Corrective RAG (Relevance Assessor → Query Refinement → External Web Search)", "useful_for": "patrón para el Citation Guard + fallback" },
+    { "id": "Fig. 20", "page": 21, "caption": "Adaptive Agentic RAG (clasificador de complejidad → skip/single-step/multi-step)", "useful_for": "optimización de latencia/costo por pregunta" },
+    { "id": "Fig. 21", "page": 23, "caption": "Agent-G: Agentic Framework for Graph RAG (Retriever Bank + Critic + Generator)", "useful_for": "si añadimos grafos como fuente" },
+    { "id": "Fig. 22", "page": 26, "caption": "GeAR: Graph-Enhanced Agent for RAG (Base Retriever + Diverse Triple Beam Search + Reader + Gist Memory + Rewriter, SyncGE single/multi-step)", "useful_for": "referencia técnica del patrón graph-expansion + agent" },
+    { "id": "Fig. 23", "page": 28, "caption": "Agentic Document Workflows (ADW): Parse → Apply Rules → Maintain State → Structured Recommendations", "useful_for": "caso directo para el módulo de paper parsing de STARK-VIX" },
+    { "id": "Table 1", "page": 8,  "caption": "Comparative Analysis of RAG Paradigms (5 paradigmas × Key Features × Strengths)", "useful_for": "tabla comparativa compacta para diapositiva del pitch" },
+    { "id": "Table 2", "page": 29, "caption": "Traditional RAG vs Agentic RAG vs ADW (10 features)", "useful_for": "argumentar por qué elegimos Agentic over Traditional" },
+    { "id": "Table 3", "page": 33, "caption": "Taxonomy-Driven Comparison of Agentic RAG Architectures (4 arquitecturas × 12 dimensiones)", "useful_for": "tabla más jugosa — 12 dimensiones que el Orchestrator puede usar literalmente como configuración" },
+    { "id": "Table 4-5", "page": "34-35", "caption": "Downstream Tasks and Datasets for RAG Evaluation (19 categorías × datasets)", "useful_for": "base para construir el evaluation harness de STARK-VIX" }
+  ],
+  "evaluation_harness_hooks": {
+    "groundedness": "§10.3 postula que la calidad del retrieval es el cuello de botella primario — el evaluation harness debe medir cobertura de retrieval, no solo quality del output final.",
+    "faithfulness": "§10.5 + §12.2 proponen evaluación process-aware: métricas sobre trayectorias de razonamiento, patrones de uso de herramientas, adaptabilidad a retrieval ruidoso — mapeable 1:1 a lo que queremos para STARK-VIX.",
+    "citation_accuracy": "§10.7 eleva explainability/traceability/auditability a first-class goals — valida el dog-whistle de 'citas trazables con anchor' del pitch.",
+    "autonomy_bounds": "§10.4 recomienda horizons de planning acotados + políticas de tool access + criterios explícitos de parada — son exactamente los guardrails que el Master Agent de STARK-VIX debe implementar."
+  },
+  "stark_vix_pitch_mapping": {
+    "architecture": "§5.3 Hierarchical Agentic RAG valida literalmente la arquitectura master-agent + sub-agentes de STARK-VIX. Fig. 18 debería aparecer en el slide de arquitectura.",
+    "corrective_layer": "§5.4 + Fig. 19 sustentan la capa de Citation Guard / Corrective que ya está scaffolded en backend/app/agents/citation_guard.py.",
+    "document_workflows": "§5.7 ADW describe exactamente el flujo de ingesta de papers que estamos construyendo (parse → rules → state → structured output). Fig. 23 es tabulable.",
+    "stack_validation": "§8 nombra explícitamente LangGraph, LlamaIndex, CrewAI, AutoGen, Bedrock, Vertex AI, Semantic Kernel, Pinecone, Neo4j — nuestra pila está validada en un solo paper por el campo.",
+    "responsible_deployment": "§10.7 + §12.5 proveen el marco de governance que podemos citar cuando hablemos de guardrails y auditability.",
+    "domain_fit": "§10.6 'domain knowledge significantly amplifies agentic benefits' respalda que nos enfoquemos en un dominio (perovskita en el mock, research papers en general) en lugar de RAG genérico."
+  }
+}

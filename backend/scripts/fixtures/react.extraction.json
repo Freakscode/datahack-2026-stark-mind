@@ -1,0 +1,206 @@
+{
+  "source": {
+    "title": "RE ACT : SYNERGIZING REASONING AND ACTINGIN LANGUAGE MODELS",
+    "authors": [
+      "Shunyu Yao ∗",
+      "Jeffrey Zhao",
+      "Dian Yu",
+      "Nan Du",
+      "Izhak Shafran",
+      "Karthik Narasimhan",
+      "Yuan Cao"
+    ],
+    "year": 2023,
+    "venue": "ICLR 2023",
+    "arxiv_id": "2210.03629",
+    "doi": null,
+    "url": "https://arxiv.org/abs/2210.03629",
+    "pdf_path": "scripts/fixtures/react.pdf",
+    "pages": 33
+  },
+  "classification": {
+    "category": "Características",
+    "paper_type": "empírico",
+    "domain": "large language models"
+  },
+  "summary": {
+    "motivation": [
+      {
+        "text": "El razonamiento \"chain-of-thought\" es una caja negra estática sin anclaje al mundo externo, lo que limita el razonamiento reactivo y puede causar alucinaciones de hechos o propagación de errores.",
+        "anchor": "§1"
+      },
+      {
+        "text": "Los modelos para entornos interactivos no utilizan modelos de lenguaje para razonar abstractamente sobre objetivos de alto nivel ni para mantener una memoria de trabajo que soporte la acción.",
+        "anchor": "§1"
+      },
+      {
+        "text": "No se han realizado estudios sobre si la integración sinérgica de razonamiento y acción aporta beneficios sistemáticos para la resolución de tareas generales frente a métodos aislados.",
+        "anchor": "§1"
+      },
+      {
+        "text": "Los modelos de toma de decisiones actuales carecen de un procedimiento de razonamiento explícito y dependen de costosos procesos de retroalimentación humana para el aprendizaje de políticas.",
+        "anchor": "§5"
+      }
+    ],
+    "methodology": [
+      {
+        "text": "La técnica ReAct expande el espacio de acciones del agente integrando un espacio de lenguaje para generar \"thoughts\" o trazas de razonamiento que actualizan el contexto sin alterar el entorno externo.",
+        "anchor": "Fig. 1"
+      },
+      {
+        "text": "El método utiliza un modelo de lenguaje congelado, PaLM-540B, mediante prompting con ejemplos few-shot que consisten en trayectorias de acciones, pensamientos y observaciones del entorno.",
+        "anchor": "§2"
+      },
+      {
+        "text": "El experimento compara ReAct frente a baselines como Standard prompting, Chain-of-thought (CoT), self-consistency (CoT-SC) y un enfoque de solo acciones (Act) en tareas de razonamiento.",
+        "anchor": "Table 1"
+      },
+      {
+        "text": "Se implementan heurísticas para combinar métodos, como transicionar de ReAT a CoT-SC cuando el agente no logra responder dentro de un número determinado de pasos de interacción.",
+        "anchor": "§3.2"
+      },
+      {
+        "text": "Se emplea un proceso de fine-tuning basado en bootstrapping con 3,000 trayectorias generadas por ReAct para entrenar modelos más pequeños como PaLM-8/62B a decodificar secuencias complejas.",
+        "anchor": "§3.2"
+      }
+    ],
+    "materials": [
+      {
+        "text": "Los datasets utilizados para evaluar la recuperación de conocimiento y razonamiento son HotpotQA, un benchmark de multi-hop QA, y FEVER, un benchmark de fact verification §3.1",
+        "anchor": "§3.1"
+      },
+      {
+        "text": "El entorno de trabajo consiste en una Wikipedia web API con tres tipos de acciones: `search [entity]`, `lookup [string]` y `finish [answer]` para permitir la recuperación interactiva §3.1",
+        "anchor": "§3.1"
+      },
+      {
+        "text": "Los experimentos de prompting se realizaron utilizando el modelo PaLM-540B, cuyos resultados de evaluación se detallan en la tabla de comparación de métodos §Table 1",
+        "anchor": "Table 1"
+      },
+      {
+        "text": "El setup de few-shot utiliza trayectorias manuales compuestas a partir de 6 casos seleccionados de HotpotQA y 3 casos de FEVER del conjunto de entrenamiento §3.2",
+        "anchor": "§3.2"
+      },
+      {
+        "text": "Para el baseline CoT-SC, se emplean 21 trayectorias de CoT con un decoding temperature de 0.7 durante la fase de inferencia para obtener la respuesta mayoritaria §3.2",
+        "anchor": "§3.2"
+      },
+      {
+        "text": "El proceso de fine-tuning utiliza un conjunto de 3,000 trayectorias con respuestas correctas generadas por ReAct para entrenar modelos más pequeños como PaLM-8/62B §3.2",
+        "anchor": "§3.2"
+      }
+    ],
+    "results": [
+      {
+        "text": "ReAct supera consistentemente a Act en HotpotQA y Fever, destacando las variantes ReAct $\\to$ CoT-SC y CoT-SC $\\to$ ReAct como los métodos de prompting más efectivos para PaLM-540B.",
+        "anchor": "Table 1"
+      },
+      {
+        "text": "El método CoT presenta una tasa de falsos positivos por alucinación del 14%, una cifra significativamente superior al 6% registrado para ReAct durante el modo de éxito.",
+        "anchor": "Table 2"
+      },
+      {
+        "text": "La alucinación representa el 56% de los fallos en CoT, mientras que ReAct ofrece trayectorias más fundamentadas y fiables gracias al acceso a una base de conocimiento externa.",
+        "anchor": "Table 2"
+      },
+      {
+        "text": "Los métodos que combinan ReAct y CoT-SC superan consistentemente a CoT-SC, alcanzando su nivel de rendimiento con solo 3-5 muestras frente a las 21 necesarias para CoT-SC.",
+        "anchor": "Fig. 2"
+      },
+      {
+        "text": "El fine-tuning de ReAct con 3,000 ejemplos supera a los métodos de prompting, permitiendo que ReAct fine-tuned 8B sobrepase el rendimiento de los métodos de prompting de PaLM-62B.",
+        "anchor": "Fig. 3"
+      },
+      {
+        "text": "En la tarea Webshop, ReAct alcanza un score de 66.6 y una tasa de éxito del 40.0%, superando el desempeño de Act que obtuvo un score de 62.3.",
+        "anchor": "Table 4"
+      }
+    ]
+  },
+  "benefit": "Este paper es fundamental para STARK-VIX ya que establece el paradigma de razonamiento y acción intercalados (Fig. 1) que sustenta nuestra arquitectura de agentes. La evidencia de que ReAct reduce la tasa de falsos positivos por alucinación del 14% al 6% (Table 2) justifica directamente nuestro pilar de groundedness y la implementación de un corrective_layer para asegurar la fidelidad de las respuestas. Asimismo, la capacidad de ReAct para mitigar el 56% de los fallos por alucinación presentes en CoT (Table 2) valida la necesidad de integrar herramientas de búsqueda externa en nuestros workflows. Finalmente, el éxito del fine-tuning basado en trayectorias (Fig. 3) respalda nuestra estrategia de optimización de agentes especializados mediante procesos de aprendizaje estructurados.",
+  "key_metrics": [
+    {
+      "name": "HotpotQA EM de ReAct $\\to$ CoT-SC",
+      "value": "35.1",
+      "unit": "EM",
+      "anchor": "Table 1"
+    },
+    {
+      "name": "Fever Acc de CoT-SC $\\to$ ReAct",
+      "value": "64.6",
+      "unit": "Acc",
+      "anchor": "Table 1"
+    },
+    {
+      "name": "HotpotQA EM de SoTA Supervised",
+      "value": "67.5",
+      "unit": "EM",
+      "anchor": "Table 1"
+    },
+    {
+      "name": "Fever Acc de SoTA Supervised",
+      "value": "89.5",
+      "unit": "Acc",
+      "anchor": "Table 1"
+    },
+    {
+      "name": "Tasa de falsos positivos en modo éxito (ReAct vs CoT)",
+      "value": "6% vs 14%",
+      "unit": "%",
+      "anchor": "Table 2"
+    },
+    {
+      "name": "Tasa de error por alucinación en CoT",
+      "value": "56",
+      "unit": "%",
+      "anchor": "Table 2"
+    },
+    {
+      "name": "Error por búsqueda no informativa en ReAct",
+      "value": "23",
+      "unit": "%",
+      "anchor": "Table 2"
+    },
+    {
+      "name": "HotpotQA EM de PaLM-540B vs GPT-3",
+      "value": "29.4 vs 30.8",
+      "unit": "EM",
+      "anchor": "Table 5"
+    },
+    {
+      "name": "ALFWorld SR de PaLM-540B vs GPT-3",
+      "value": "70.9% vs 78.4%",
+      "unit": "%",
+      "anchor": "Table 5"
+    },
+    {
+      "name": "Fever Acc de ReAct vs CoT",
+      "value": "60.9 vs 56.3",
+      "unit": "Acc",
+      "anchor": "Table 2"
+    },
+    {
+      "name": "HotpotQA EM de ReAct vs CoT",
+      "value": "27.4 vs 29.4",
+      "unit": "EM",
+      "anchor": "Table 2"
+    },
+    {
+      "name": "Muestras para alcanzar rendimiento CoT-SC con ReAct",
+      "value": "3-5",
+      "unit": "samples",
+      "anchor": "Section 3.3"
+    }
+  ],
+  "pitch_mapping": {
+    "entries": {
+      "architecture": "patrón de razonamiento y acción intercalados (Fig. 1)",
+      "corrective_layer": "reducción de la tasa de alucinación del 14% al 6% (Table 2)",
+      "evaluation_harness": "mitigación del 56% de fallos por alucinación en CoT (Table 2)",
+      "document_workflows": "optimización mediante fine-tuning de trayectorias (Fig. 3)"
+    }
+  },
+  "provider": "ollama",
+  "model": "gemma4:26b",
+  "extractor_version": "langgraph-v1"
+}

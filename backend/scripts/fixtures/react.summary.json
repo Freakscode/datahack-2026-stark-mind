@@ -1,0 +1,273 @@
+{
+  "id": "react-2023",
+  "extraction": {
+    "extracted_by": "human (Claude-assisted manual pass)",
+    "extracted_at": "2026-04-22",
+    "purpose": "ground truth para evaluar la calidad de la extracción automatizada (reader agent y futuros modelos locales)",
+    "notes": "lectura directa de pp. 1-9 (cuerpo principal) + pp. 14-20 (appendices A, B, C.1). pp. 21-33 son prompts de FEVER y trayectorias ALFWorld/WebShop, no añaden hechos nuevos para el resumen de 4 columnas."
+  },
+  "source": {
+    "arxiv_id": "2210.03629",
+    "version": "v3",
+    "submitted_date": "2023-03-10",
+    "venue": "ICLR 2023",
+    "year": 2023,
+    "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+    "authors": [
+      "Shunyu Yao",
+      "Jeffrey Zhao",
+      "Dian Yu",
+      "Nan Du",
+      "Izhak Shafran",
+      "Karthik Narasimhan",
+      "Yuan Cao"
+    ],
+    "affiliations": [
+      "Department of Computer Science, Princeton University",
+      "Google Research, Brain team"
+    ],
+    "project_page": "https://react-lm.github.io/",
+    "pdf_path": "backend/scripts/fixtures/react.pdf",
+    "pages": 33,
+    "pages_main": 10,
+    "pages_references": "10-13",
+    "pages_appendix": "14-33"
+  },
+  "classification": {
+    "category": "Características",
+    "paper_type": "empírico",
+    "domain": "AI / Large Language Models",
+    "tasks": [
+      "knowledge-intensive reasoning (HotpotQA, FEVER)",
+      "interactive decision-making (ALFWorld, WebShop)"
+    ]
+  },
+  "key_metrics": {
+    "base_model_primary": "PaLM-540B (Chowdhery et al., 2022)",
+    "base_model_secondary": "GPT-3 text-davinci-002",
+    "benchmarks": ["HotpotQA", "FEVER", "ALFWorld", "WebShop"],
+    "best_hotpotqa_em": {
+      "value": 35.1,
+      "method": "CoT-SC→ReAct",
+      "anchor": "Table 1"
+    },
+    "best_fever_acc": {
+      "value": 64.6,
+      "method": "CoT-SC→ReAct",
+      "anchor": "Table 1"
+    },
+    "alfworld_success_rate": {
+      "best_react": 71,
+      "best_act": 45,
+      "butler": 37,
+      "absolute_gain_vs_best_baseline": 34,
+      "anchor": "Table 3"
+    },
+    "webshop_success_rate": {
+      "react": 40.0,
+      "act": 30.1,
+      "il": 29.1,
+      "il_rl": 28.7,
+      "human_expert": 59.6,
+      "absolute_gain_vs_il_rl": 11.3,
+      "anchor": "Table 4"
+    },
+    "hallucination": {
+      "react_false_positive": "6%",
+      "cot_false_positive": "14%",
+      "react_hallucination_failure_share": "0%",
+      "cot_hallucination_failure_share": "56%",
+      "anchor": "Table 2"
+    }
+  },
+  "benefit": "Paper canónico que formaliza el paradigma pensamiento + acción intercalados que sustenta la arquitectura multiagente de STARK-VIX. Aporta evidencia empírica directa (0% hallucination vs 56% en CoT, +34% en ALFWorld, +10% en WebShop) para justificar el pilar de groundedness/faithfulness del evaluation harness. Útil en §Arquitectura como cita fundacional y en §Evaluación como referencia del patrón 'reasoning grounded in external retrieval'.",
+  "summary": {
+    "motivation": [
+      {
+        "text": "Razonamiento (Chain-of-Thought) y actuación (action plan generation) en LLMs se han estudiado como temas separados — no existe un estudio sistemático de su combinación sinérgica.",
+        "anchor": "§1"
+      },
+      {
+        "text": "CoT es una 'caja negra estática': el modelo usa solo sus representaciones internas y no está grounded en el mundo externo, lo que causa alucinación de hechos y propagación de errores.",
+        "anchor": "§1 / Fig. 1(1b)"
+      },
+      {
+        "text": "Los LMs pre-entrenados para planificación/acción se apoyan en priors de lenguaje pero no razonan abstractamente sobre goals de alto nivel ni mantienen memoria de trabajo.",
+        "anchor": "§1"
+      },
+      {
+        "text": "La inteligencia humana combina acciones task-oriented con razonamiento verbal ('inner speech') para autorregulación — esta sinergia está ausente en los sistemas existentes.",
+        "anchor": "§1 (Alderson-Day & Fernyhough 2015, Vygotsky 1987, Baddeley 1992)"
+      }
+    ],
+    "methodology": [
+      {
+        "text": "Paradigma ReAct: se aumenta el espacio de acciones del agente de 𝒜 a 𝒜̂ = 𝒜 ∪ ℒ, donde ℒ es el espacio del lenguaje. Una 'thought' â_t ∈ ℒ no afecta el entorno pero actualiza el contexto c_{t+1} = (c_t, â_t).",
+        "anchor": "§2"
+      },
+      {
+        "text": "Prompting few-shot sobre PaLM-540B congelado, con trayectorias anotadas a mano que intercalan thought → action → observation.",
+        "anchor": "§2"
+      },
+      {
+        "text": "Tareas knowledge-intensive (HotpotQA, FEVER): patrón de thoughts denso — descomposición de la pregunta, extracción desde observaciones, razonamiento commonsense/aritmético, reformulación de búsqueda, síntesis de respuesta.",
+        "anchor": "§3.2 ReAct Prompting"
+      },
+      {
+        "text": "Tareas decision-making (ALFWorld, WebShop): patrón de thoughts sparse — solo en posiciones relevantes; se deja al LM decidir cuándo emitir pensamiento.",
+        "anchor": "§4 / §3 (setup)"
+      },
+      {
+        "text": "Cuatro baselines ablados: Standard (sin thoughts ni acts), CoT (solo razonamiento), CoT-SC (self-consistency con 21 trayectorias temp 0.7 y voto mayoritario), Act (solo acciones).",
+        "anchor": "§3.2 Baselines"
+      },
+      {
+        "text": "Heurística híbrida ReAct ↔ CoT-SC: fallback ReAct→CoT-SC si no hay respuesta en N pasos (7 HotpotQA, 5 FEVER); fallback CoT-SC→ReAct si la mayoría < n/2 (confianza interna baja).",
+        "anchor": "§3.2 Combining Internal and External Knowledge"
+      },
+      {
+        "text": "Finetuning bootstrapping: generar ~3,000 trayectorias correctas con ReAct/baselines y finetunear PaLM-8B/62B para predecir thought+action+observation condicionado en la pregunta.",
+        "anchor": "§3.2 Finetuning + Appendix B.1"
+      }
+    ],
+    "materials": [
+      {
+        "text": "Modelo base principal: PaLM-540B congelado (Chowdhery et al. 2022). Resultados secundarios con GPT-3 text-davinci-002 en Appendix A.1.",
+        "anchor": "§2 / Appendix A.1"
+      },
+      {
+        "text": "Entorno externo: API web de Wikipedia con 3 acciones — search[entity] (top-5 frases de la página o top-5 entidades similares), lookup[string] (estilo Ctrl+F), finish[answer].",
+        "anchor": "§3.1 Action Space"
+      },
+      {
+        "text": "HotpotQA (Yang et al. 2018): QA multi-hop sobre ≥2 pasajes de Wikipedia; evaluación Exact Match.",
+        "anchor": "§3.1 Domains"
+      },
+      {
+        "text": "FEVER (Thorne et al. 2018): verificación de hechos con etiquetas SUPPORTS/REFUTES/NOT ENOUGH INFO.",
+        "anchor": "§3.1 Domains"
+      },
+      {
+        "text": "ALFWorld (Shridhar et al. 2020b): juego text-based con 6 tipos de tarea; evaluación sobre 134 juegos nunca vistos; 3 trayectorias anotadas por tipo (6 prompts por permutación de 2 de 3).",
+        "anchor": "§4 ALFWorld"
+      },
+      {
+        "text": "WebShop (Yao et al. 2022): entorno de compras online con 1.18M productos reales crawleados de Amazon y 12k instrucciones humanas; métricas: score medio y tasa de éxito sobre 500 tests.",
+        "anchor": "§4 WebShop"
+      },
+      {
+        "text": "Exemplars: 6 para HotpotQA, 3 para FEVER (más no mejora). Decoding greedy excepto CoT-SC (21 muestras, temp 0.7).",
+        "anchor": "§3.2 fn. 2"
+      },
+      {
+        "text": "Código + prompts públicos en https://react-lm.github.io/ y https://anonymous.4open.science/r/ReAct-2268/",
+        "anchor": "Reproducibility Statement (p. 10)"
+      }
+    ],
+    "results": [
+      {
+        "text": "HotpotQA EM — ReAct 27.4 queda ligeramente por debajo de CoT 29.4, pero la híbrida CoT-SC→ReAct alcanza 35.1 (mejor del paper) y ReAct→CoT-SC 34.2, ambas superan CoT-SC sola (33.4). Supervised SoTA 67.5.",
+        "anchor": "Table 1"
+      },
+      {
+        "text": "FEVER Accuracy — ReAct 60.9 supera a CoT 56.3; el híbrido CoT-SC→ReAct obtiene el mejor resultado: 64.6. Standard 57.1, Supervised SoTA 89.5.",
+        "anchor": "Table 1"
+      },
+      {
+        "text": "Análisis de errores: CoT falla en 56% de casos por alucinación (false positives 14% success), ReAct en 0% por alucinación (false positives 6% success). Errores de ReAct: 47% reasoning error, 23% non-informative search.",
+        "anchor": "Table 2"
+      },
+      {
+        "text": "Eficiencia de muestras: los híbridos ReAct+CoT-SC igualan la performance de CoT-SC con 21 muestras usando solo 3-5 trayectorias.",
+        "anchor": "Fig. 2"
+      },
+      {
+        "text": "ALFWorld success rate — mejor ReAct 71% vs mejor Act 45% vs BUTLER 37% (trained on 10^5 trajectories): +34 puntos absolutos. Incluso la peor corrida de ReAct (48%) supera a la mejor de Act.",
+        "anchor": "Table 3"
+      },
+      {
+        "text": "WebShop — ReAct 40.0 SR vs IL+RL 28.7 vs Act 30.1: +11.3 puntos absolutos (casi 40% relativo). Score: ReAct 66.6 vs Act 62.3. Human expert 59.6 SR sigue marcando el techo.",
+        "anchor": "Table 4"
+      },
+      {
+        "text": "Finetuning: con 3,000 trayectorias, PaLM-62B finetuneado con ReAct supera a todos los métodos de prompting sobre PaLM-540B. Orden final: ReAct > Act > CoT > Standard para finetuning; lo contrario para prompting pequeño.",
+        "anchor": "Fig. 3"
+      },
+      {
+        "text": "Generalización a GPT-3 (davinci-002): GPT-3 + ReAct supera a PaLM-540B + ReAct en HotpotQA (30.8 vs 29.4) y ALFWorld (78.4 vs 70.9) — la efectividad del patrón no depende del modelo base.",
+        "anchor": "Table 5 / Appendix A.1"
+      },
+      {
+        "text": "Human-in-the-loop: editar 2 thoughts en una trayectoria fallida de ALFWorld la convierte en exitosa, demostrando controlabilidad interpretable imposible en baselines RL/IL.",
+        "anchor": "Fig. 5 / Appendix A.3"
+      }
+    ]
+  },
+  "figures_inventory": [
+    {
+      "id": "Fig. 1",
+      "page": 2,
+      "caption": "Comparación de 4 métodos de prompting (Standard, CoT, Act-only, ReAct) en HotpotQA y ALFWorld, mostrando trayectorias de razonamiento.",
+      "useful_for": "mostrar visualmente la diferencia de trazas entre paradigmas — canónica para el pitch"
+    },
+    {
+      "id": "Fig. 2",
+      "page": 5,
+      "caption": "Resultados de prompting PaLM-540B respecto al número de muestras CoT-SC.",
+      "useful_for": "argumentar eficiencia de muestras del enfoque híbrido"
+    },
+    {
+      "id": "Fig. 3",
+      "page": 7,
+      "caption": "Escalado de prompting y finetuning en HotpotQA con PaLM-8B/62B/540B.",
+      "useful_for": "demostrar beneficio de finetuning con pocas trayectorias"
+    },
+    {
+      "id": "Fig. 4",
+      "page": 14,
+      "caption": "Ejemplo adicional HotpotQA donde la etiqueta original está desactualizada — solo ReAct obtiene respuesta al día.",
+      "useful_for": "caso de estudio sobre labels obsoletos en datasets"
+    },
+    {
+      "id": "Fig. 5",
+      "page": 15,
+      "caption": "Corrección human-in-the-loop en AlfWorld editando 2 thoughts.",
+      "useful_for": "argumentar controllability/interpretability del paradigma"
+    },
+    {
+      "id": "Table 1",
+      "page": 5,
+      "caption": "Resultados prompting PaLM-540B en HotpotQA EM y FEVER Acc.",
+      "useful_for": "comparativa principal de métodos"
+    },
+    {
+      "id": "Table 2",
+      "page": 6,
+      "caption": "Tipos de éxito/fallo de ReAct vs CoT en HotpotQA con porcentajes humanos anotados.",
+      "useful_for": "evidencia dura de reducción de alucinación"
+    },
+    {
+      "id": "Table 3",
+      "page": 8,
+      "caption": "Tasa de éxito por tarea en ALFWorld.",
+      "useful_for": "resultados decision-making embodied"
+    },
+    {
+      "id": "Table 4",
+      "page": 8,
+      "caption": "Score y success rate en WebShop.",
+      "useful_for": "resultados decision-making web"
+    },
+    {
+      "id": "Table 5",
+      "page": 14,
+      "caption": "Resultados ReAct con PaLM-540B vs GPT-3 en HotpotQA y ALFWorld.",
+      "useful_for": "generalización cross-model"
+    }
+  ],
+  "evaluation_harness_hooks": {
+    "groundedness": "ReAct baja alucinación de 56% → 0% vs CoT (Table 2). Usable como métrica diana del evaluation harness.",
+    "faithfulness": "Cada observación proviene de búsquedas verificables en Wikipedia — provee anchor real para citations, coherente con el dog-whistle del pitch.",
+    "citation_accuracy": "Formato search[entity] → observation actúa como cita trazable dentro de la trayectoria; el Orchestrator de STARK-VIX puede replicar este contrato."
+  }
+}

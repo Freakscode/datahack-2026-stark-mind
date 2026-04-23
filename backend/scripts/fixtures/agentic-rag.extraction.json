@@ -1,0 +1,132 @@
+{
+  "source": {
+    "title": "AGENTIC RAG AGENTIC RETRIEVAL -A UGMENTED GENERATION : AS URVEYON",
+    "authors": [],
+    "year": 2026,
+    "venue": null,
+    "arxiv_id": "2501.09136",
+    "doi": null,
+    "url": "https://arxiv.org/abs/2501.09136",
+    "pdf_path": "scripts/fixtures/agentic-rag.pdf",
+    "pages": 42
+  },
+  "classification": {
+    "category": "Contexto",
+    "paper_type": "survey",
+    "domain": "agentic RAG"
+  },
+  "summary": {
+    "motivation": [
+      {
+        "text": "Los LLMs enfrentan desafíos críticos al depender de datos de pre-entrenamiento estáticos, lo que provoca respuestas desactualizadas, alucinaciones y una incapacidad para adaptarse a la información del mundo real en constante evolución.",
+        "anchor": "§1"
+      },
+      {
+        "text": "Los pipelines tradicionales de RAG son típicamente estáticos y lineales, lo que limita el razonamiento multi-paso complejo, la comprensión contextual profunda y el proceso de refinamiento iterativo de las respuestas.",
+        "anchor": "§1"
+      },
+      {
+        "text": "El campo de Agentic RAG permanece fragmentado, caracterizado por arquitecturas diversas, una terminología inconsistente y una falta de comprensión comparativa entre los diversos marcos de trabajo y aplicaciones específicas.",
+        "anchor": "§1"
+      },
+      {
+        "text": "No existe actualmente una taxonomía unificada que logre organizar los sistemas de Agentic RAG bajo dimensiones de diseño con principios claros, dificultando la estructuración de este campo emergente.",
+        "anchor": "§1"
+      }
+    ],
+    "methodology": [
+      {
+        "text": "El estudio examina la progresión de los paradigmas RAG, analizando la transición desde Naïve RAG hacia sistemas más sofisticados como Advanced, Modular, Graph y Agentic RAG, evaluando sus características, fortalezas y limitaciones técnicas.",
+        "anchor": "§2.3"
+      },
+      {
+        "text": "Se analiza el paradigma Naïve RAG, detallando su flujo de trabajo retrieve-read basado en técnicas de recuperación por palabras clave como TF-IDF y BM25 para la expansión de modelos de lenguaje con datasets estáticos.",
+        "anchor": "Fig. 3"
+      },
+      {
+        "text": "La investigación desglosa los componentes esenciales de los agentes de IA, incluyendo el LLM como motor de razonamiento, sistemas de memoria a corto y largo plazo, procesos de planning y el uso de herramientas externas.",
+        "anchor": "Fig. 7"
+      },
+      {
+        "text": "Se exploran los agentic patterns como metodologías estructuradas que guían el comportamiento de los agentes, permitiendo la adaptación dinámica, el planning y la colaboración para resolver tareas complejas con precisión y escalabilidad.",
+        "anchor": "§3"
+      }
+    ],
+    "materials": [
+      {
+        "text": "Frameworks y herramientas: LangChain, LangGraph, LlamaIndex, Hugging Face Transformers, Qdrant, CrewAI, AutoGen (AG2), OpenAI Swarm Framework, Vertex AI, Semantic Kernel, Amazon Bedrock, IBM watsonx.ai, Neo4j, Weaviate, Pinecone y Milvus.",
+        "anchor": "§8"
+      },
+      {
+        "text": "Benchmarks y datasets: BEIR, MS MARCO, TREC, MuSiQue, 2WikiMultihopQA, AgentG, HotpotQA, RAGBench, BERGEN, FlashRAG y GNN-RAG, utilizados para evaluar procesos de retrieval, reasoning y generation.",
+        "anchor": "§11"
+      },
+      {
+        "text": "Arquitecturas categorizadas según su complejidad y diseño: single-agent architectures, multi-agent systems y hierarchical agentic architectures, diseñadas para abordar desafíos específicos y optimizar el rendimiento en aplicaciones de Agentic RAG.",
+        "anchor": "§5"
+      }
+    ],
+    "results": [
+      {
+        "text": "Naïve RAG es ideal para consultas basadas en hechos, mientras que Graph RAG utiliza estructuras de grafos para mitigar hallucinations y permitir multi-hop reasoning de manera efectiva.",
+        "anchor": "Table 1"
+      },
+      {
+        "text": "La transición de Traditional RAG a Agentic RAG permite la colaboración multi-agente, mientras que ADW se enfoca en workflows end-to-end para procesos documentales altamente especializados.",
+        "anchor": "Table 2"
+      },
+      {
+        "text": "Las arquitecturas Hierarchical y Graph-based presentan la mayor profundidad de razonamiento y complejidad, a diferencia del Single-Agent RAG que posee menor profundidad y complejidad técnica.",
+        "anchor": "Table 3"
+      },
+      {
+        "text": "La calidad de la recuperación es el principal bottleneck, ya que el razonamiento agentic no puede compensar una cobertura de retrieval inadecuada o índices mal construidos.",
+        "anchor": "§10.3"
+      },
+      {
+        "text": "Los sistemas Traditional RAG presentan limitaciones en multi-step reasoning, fallando al conectar elementos dispares en consultas complejas que requieren la síntesis de múltiples fuentes de información.",
+        "anchor": "§2.4.2"
+      },
+      {
+        "text": "En el análisis legal, Agentic RAG automatiza la identificación de riesgos y mejora la eficiencia mediante la integración de semantic search con legal knowledge graphs especializados.",
+        "anchor": "§7.3"
+      },
+      {
+        "text": "El escalado hacia frameworks multi-agente genera comportamientos emergentes difíciles de predecir y desafíos críticos en la coordinación bajo escenarios de partial observability y objetivos conflictivos.",
+        "anchor": "§12"
+      }
+    ]
+  },
+  "benefit": "Este survey es fundamental para STARK-VIX porque proporciona la base taxonómica y técnica para nuestra arquitectura. Valida nuestra pila tecnológica al identificar LangGraph, LlamaIndex, CrewAI, AutoGen, Bedrock y Vertex AI como frameworks de referencia (§8). Además, justifica la transición hacia sistemas complejos mediante la descripción de arquitecturas jerárquicas (§5) y el uso de Agentic Document Workflows (ADW) para procesos especializados (Fig. 23). La mención de patrones de self-reflection (Fig. 8) y correctivo (Fig. 19) sustenta directamente nuestro pilar de reducción de hallucination y validación de citas.",
+  "key_metrics": [
+    {
+      "name": "Marcos arquitectónicos comparados",
+      "value": "3",
+      "unit": "count",
+      "anchor": "Table 2"
+    },
+    {
+      "name": "Temas de investigación abiertos",
+      "value": "12",
+      "unit": "count",
+      "anchor": "Section 12"
+    },
+    {
+      "name": "Aplicaciones de Agentic RAG",
+      "value": "7",
+      "unit": "count",
+      "anchor": "Section 7"
+    }
+  ],
+  "pitch_mapping": {
+    "entries": {
+      "stack_validation": "nombra LangGraph, LlamaIndex, CrewAI, AutoGen, Bedrock y Vertex AI como frameworks de referencia (§8)",
+      "architecture": "arquitecturas jerárquicas y multi-agente (§5, Fig. 18)",
+      "document_workflows": "Agentic Document Workflows (ADW) para procesos especializados (Fig. 23)",
+      "corrective_layer": "patrones de Agentic Self-Reflection y Agentic Corrective RAG (Fig. 8, Fig. 19)"
+    }
+  },
+  "provider": "ollama",
+  "model": "gemma4:26b",
+  "extractor_version": "langgraph-v1"
+}

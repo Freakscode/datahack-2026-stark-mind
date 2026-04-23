@@ -1,0 +1,200 @@
+INVESTIGACION DE SOFTSERVE APLICADA AL RETO 3
+================================================
+
+Reto DataHack 2026 - Reto 3: Asistente Inteligente para Articulos de
+Investigacion (aplicacion multiagente).
+
+
+------------------------------------------------------------
+SNAPSHOT DE SOFTSERVE COLOMBIA
+------------------------------------------------------------
+
+- Llegada a Medellin: 2022, oficinas en FIC 48 (Cra. 48 #18 A 14,
+  piso 5). Reconocida por ACI Medellin.
+- Areas activas localmente: software engineering, cloud/DevOps,
+  big data & analytics, AI/ML, IoT, XR, robotics.
+- Vinculo con talento local: alianzas con Ruta N, Fundacion Juanfe,
+  Codigo Comuna 13 (formacion TI, ~600 colombianos capacitados
+  en 2023).
+
+
+------------------------------------------------------------
+LOS 3 SERVICIOS DE SOFTSERVE QUE SON LITERALMENTE EL RETO
+------------------------------------------------------------
+
+Hallazgo mas importante: el reto DataHack 3 es practicamente el
+caso de uso insignia de tres productos/servicios que SoftServe ya
+comercializa. Si lo resolvemos bien, estamos construyendo una demo
+de su propio portafolio - ese es el angulo de convencimiento.
+
+1) Multi-Agent RAG Platform (AWS Marketplace)
+   - Que es: Master Agent orquestando agentes - Multimodal RAG,
+     Text-to-SQL, Chart Generation, Function Calling.
+   - Conexion con Reto 3: arquitectura base del asistente. Un
+     orquestador que coordina agentes de busqueda, lectura,
+     comparacion y visualizacion.
+
+2) Insights Engine Pilot (servicio de IA)
+   - Que es: "Asistente RAG multimodal con citas integradas,
+     enfocado en dominios especificos".
+   - Conexion con Reto 3: es exactamente el producto - RAG con
+     citas sobre literatura cientifica como dominio.
+
+3) Agentic MVP Sprint (oferta comercial)
+   - Que es: desarrollo en 4-6 semanas de agentes/copilots con
+     evaluation harness y safeguards.
+   - Conexion con Reto 3: el formato del hackathon (pocos dias)
+     imita su sprint. Mostrar evaluacion + guardrails habla su
+     idioma.
+
+
+------------------------------------------------------------
+QUE ESTA PERSIGUIENDO SOFTSERVE EN ESTE MOMENTO (2026)
+------------------------------------------------------------
+
+Contexto critico para la propuesta:
+
+1. Febrero 2026: lanzaron la Agentic Engineering Suite - 7 agentes
+   autonomos para el ciclo de software (QA, BA, Code Gen, Architect,
+   Maintenance, CI/CD, Code Conversion). Bandera clara: agentes
+   sobre chatbots.
+
+2. Abril 2026: corrieron AgentX Hackathon (Medellin, Santiago,
+   Guadalajara) - premio de $10K USD y entrada directa al equipo
+   global de R&D. Target explicito: "developers, R&D engineers,
+   ML engineers y agentic systems creators".
+
+3. AgentForge (hackathon global): construido sobre API de Anthropic.
+   Claude es su LLM de demo preferido para agentes.
+
+4. Nuevo rol corporativo: "Intelligence Engineers" - ingenieros que
+   trabajan directamente con agentes de IA en todo el ciclo.
+
+5. Areas de R&D declaradas: IA Multimodal, Agentic Engineering,
+   Biotech (bioinformatica, diseno de farmacos), HPC, Edge AI,
+   Quantum Computing.
+
+Conclusion: SoftServe esta invirtiendo agresivamente en agentes
+autonomos y busca senales de talento local en Medellin que entienda
+esa direccion. El reto es una oportunidad para ellos de identificar
+equipos, no solo un ejercicio academico.
+
+
+------------------------------------------------------------
+COMO DISENAR EL MVP PARA "CONVENCERLOS"
+------------------------------------------------------------
+
+Estos son los "dog whistles" tecnicos y de producto que deberian
+estar presentes en la demo/pitch.
+
+--- Arquitectura (hablarles en su jerga) ---
+
+- Master Agent + agentes especializados, no un LLM monolitico.
+  Minimo:
+    Orchestrator -> {Discovery, Reader/RAG, Comparator,
+                     Synthesizer, Citation-Guard}
+- Multimodal RAG: los papers incluyen tablas, figuras, formulas.
+  Mostrar que extraemos mas que texto plano.
+- Function Calling a fuentes reales: arXiv, bioRxiv, PubMed,
+  Semantic Scholar.
+- Evaluation harness: metricas de groundedness, faithfulness,
+  citation accuracy. SoftServe lo menciona en cada servicio de IA.
+- Guardrails: deteccion de alucinaciones, refuerzo de citas
+  obligatorias.
+
+--- Stack alineado con sus partnerships ---
+
+- LLM: Claude (Anthropic) - porque usaron su API en AgentForge.
+- Cloud: AWS (Bedrock, Lambda, OpenSearch) o Azure - coinciden con
+  sus partners top.
+- Vector DB: pgvector o Pinecone.
+- Orquestacion: LangGraph o CrewAI con patron jerarquico
+  (Master Agent).
+
+--- Diferenciadores que apuntan a su negocio ---
+
+1. Verticalizacion del dominio (ej: demo en biotech/IA/materiales)
+   -> Les permite revender el patron a clientes en life sciences,
+      pharma, manufactura.
+
+2. Citas trazables con anchor al parrafo/figura
+   -> Es el diferencial de su "Insights Engine".
+
+3. Comportamiento agentic: planea, ejecuta, autocorrige
+   -> Separa "chatbot" de "agente autonomo" - su bandera de 2026.
+
+4. Modo "co-investigador R&D": genera hipotesis, detecta gaps
+   de literatura
+   -> Habla al caso de uso interno de sus propios ingenieros de R&D.
+
+5. Panel de tendencias/timeline
+   -> Les sirve como herramienta interna de inteligencia
+      competitiva.
+
+6. Exportable (Notion, PDF, Markdown, Jira)
+   -> Integracion con flujos corporativos - lo que ellos hacen
+      por default.
+
+--- El pitch de convencimiento (estructura sugerida) ---
+
+1. Problema: sus propios R&D engineers pierden 30-40% del tiempo
+   en literatura -> dogfooding interno posible.
+2. Solucion: un Insights Engine vertical para papers - usa su
+   mismo patron multi-agente.
+3. Demo: caso real en un dominio (ej: "ultimos 6 meses de RAG
+   agentic en arXiv") mostrando descubrir -> resumir -> comparar
+   -> sintetizar con citas.
+4. Monetizacion para ellos: el patron se revende como Insights
+   Engine a clientes pharma, biotech, legal, consultoria
+   estrategica.
+5. Talento: el equipo esta listo para el rol de Intelligence
+   Engineers que ya estan contratando.
+
+
+------------------------------------------------------------
+PROXIMOS PASOS POSIBLES
+------------------------------------------------------------
+
+- Disenar la arquitectura multiagente detallada (nodos, mensajes,
+  tools).
+- Definir el evaluation harness (metricas y dataset de validacion).
+- Elegir el stack concreto (LangGraph vs CrewAI vs custom).
+- Preparar el pitch deck alineado con la narrativa SoftServe.
+
+
+------------------------------------------------------------
+FUENTES
+------------------------------------------------------------
+
+- SoftServe Colombia - Career:
+  https://career.softserveinc.com/es/about/colombia
+
+- SoftServe AI Services:
+  https://www.softserveinc.com/en-us/services/artificial-intelligence
+
+- SoftServe Research & Development:
+  https://www.softserveinc.com/en-us/services/research-and-development
+
+- SoftServe Multi-Agent RAG Platform on AWS:
+  https://aws.amazon.com/marketplace/pp/prodview-yrneq3pcltnka
+
+- SoftServe Generative AI:
+  https://www.softserveinc.com/en-us/generative-ai
+
+- SoftServe Agentic Engineering Suite launch:
+  https://www.softserveinc.com/en-us/news/softserve-launches-agentic-engineering-suite
+
+- AgentX Hackathon 2026 (SoftServe):
+  https://app.softserveinc.com/apply/agentx-hackathon/
+
+- AgentX lanzamiento regional (Descubre.vc):
+  https://www.descubre.vc/noticia/softserve-lanza-agentx-el-primer-hackathon-regional-de-ia-en-chile-colombia-y-m-xico-2026-03-19
+
+- AgentForge Hackathon (SoftServe):
+  https://www.softserveinc.com/en-us/news/next-generation-ai-agents-softserve-hackathon
+
+- SoftServe Colombia ACI Medellin recognition:
+  https://www.softserveinc.com/en-us/news/softserve-colombia-recognized-by-aci-medellin
+
+- Roles y procesos para agentic engineering (SoftServe blog):
+  https://www.softserveinc.com/en-us/blog/roles-and-processes-for-agentic-engineering
