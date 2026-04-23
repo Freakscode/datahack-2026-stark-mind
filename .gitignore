@@ -53,3 +53,8 @@ build/
 # Archivos temporales
 *.tmp
 *.bak
+
+# Grabaciones de video (no van al repo)
+*.mp4
+*.mov
+*.webm
