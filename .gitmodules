@@ -1,0 +1,3 @@
+[submodule "stark-insight-forge"]
+	path = stark-insight-forge
+	url = git@github.com:danielita2508/stark-insight-forge.git
