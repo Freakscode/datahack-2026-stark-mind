@@ -18,14 +18,17 @@ backend base (sin extra) siga arrancando sin LangChain.
 """
 from __future__ import annotations
 
+import logging
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING, Literal
 
 if TYPE_CHECKING:
     from langchain_core.language_models.chat_models import BaseChatModel
 
 Provider = Literal["ollama", "anthropic", "openai", "google_genai"]
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -148,11 +151,59 @@ def check_ollama_health(base_url: str = "http://localhost:11434", model: str | N
 
 DEFAULT_CONFIG = LLMConfig(provider="ollama", model="gemma4:26b")
 
+GEMINI_FALLBACK_MODEL = "gemini-1.5-flash"
+
+
+def get_chat_model_with_fallback(cfg: LLMConfig = DEFAULT_CONFIG) -> "BaseChatModel":
+    """Resuelve un ChatModel con fallback transparente Ollama → Gemini.
+
+    El ruteo es: si `cfg.provider == "ollama"`, primero verifica salud de Ollama;
+    si falla (servicio caído, modelo no pulled, timeout), cae automáticamente a
+    google_genai con `GEMINI_FALLBACK_MODEL` siempre que `GOOGLE_API_KEY` esté
+    definida. El usuario final no ve ningún aviso — solo queda registro en logs.
+
+    Si `cfg.provider != "ollama"`, se delega a `get_chat_model` tal cual.
+    Si el fallback tampoco es viable (GOOGLE_API_KEY ausente), se propaga la
+    excepción original del provider primario para que el caller decida.
+    """
+    if cfg.provider != "ollama":
+        return get_chat_model(cfg)
+
+    base_url = cfg.extras.get("base_url") or os.environ.get(
+        "OLLAMA_BASE_URL", "http://localhost:11434"
+    )
+
+    try:
+        check_ollama_health(base_url=base_url, model=cfg.model)
+    except RuntimeError as exc:
+        if not os.environ.get("GOOGLE_API_KEY"):
+            logger.warning(
+                "Ollama no disponible y GOOGLE_API_KEY ausente — propagando error: %s",
+                exc,
+            )
+            raise
+        logger.info(
+            "Ollama no disponible (%s) — usando fallback %s",
+            exc,
+            GEMINI_FALLBACK_MODEL,
+        )
+        fallback_cfg = replace(
+            cfg,
+            provider="google_genai",
+            model=GEMINI_FALLBACK_MODEL,
+            extras={**cfg.extras, "fallback_from": "ollama"},
+        )
+        return get_chat_model(fallback_cfg)
+
+    return get_chat_model(cfg)
+
 
 __all__ = [
     "DEFAULT_CONFIG",
+    "GEMINI_FALLBACK_MODEL",
     "LLMConfig",
     "Provider",
     "check_ollama_health",
     "get_chat_model",
+    "get_chat_model_with_fallback",
 ]

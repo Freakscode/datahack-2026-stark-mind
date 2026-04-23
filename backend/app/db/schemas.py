@@ -150,6 +150,21 @@ class ProjectPaperRead(ORMModel):
     added_at: datetime
 
 
+class ProjectPaperWithPaper(ORMModel):
+    """Link del project_paper + datos del paper embebidos.
+
+    Se devuelve desde `GET /projects/{id}/papers` para que el frontend
+    pueda renderizar tarjetas sin pedir cada paper por separado.
+    """
+
+    project_id: UUID
+    paper_id: str
+    relevance_score: Decimal | None = None
+    added_by: AddedByT
+    added_at: datetime
+    paper: PaperRead
+
+
 class ProjectPaperAttach(BaseModel):
     paper_id: str
     relevance_score: Decimal | None = None

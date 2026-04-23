@@ -6,10 +6,16 @@ from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, status
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from app.api.deps import SessionDep
 from app.db.models import Note, Project, ProjectPaper
-from app.db.schemas import NoteRead, ProjectCreate, ProjectPaperRead, ProjectRead
+from app.db.schemas import (
+    NoteRead,
+    ProjectCreate,
+    ProjectPaperWithPaper,
+    ProjectRead,
+)
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 
@@ -45,10 +51,16 @@ async def get_project(project_id: UUID, session: SessionDep) -> Project:
     return project
 
 
-@router.get("/{project_id}/papers", response_model=list[ProjectPaperRead])
+@router.get("/{project_id}/papers", response_model=list[ProjectPaperWithPaper])
 async def list_project_papers(project_id: UUID, session: SessionDep) -> list[ProjectPaper]:
+    """Lista papers vinculados al proyecto con metadata completa del paper.
+
+    Ordenados por `added_at` desc para que los últimos descubrimientos del
+    Discovery Agent aparezcan primero en la UI.
+    """
     stmt = (
         select(ProjectPaper)
+        .options(selectinload(ProjectPaper.paper))
         .where(ProjectPaper.project_id == project_id)
         .order_by(ProjectPaper.added_at.desc())
     )

@@ -38,7 +38,7 @@ from app.agents.extractor.prompts import (
     render_extract_column,
     render_extract_metrics,
 )
-from app.agents.llm_providers import LLMConfig, get_chat_model
+from app.agents.llm_providers import LLMConfig, get_chat_model_with_fallback
 from app.agents.pdf_preprocessor import (
     PaperPreprocessed,
     route_sections_to_columns,
@@ -148,7 +148,7 @@ async def _call_llm(cfg: LLMConfig, system: str, user: str, *, max_retries: int 
     respuesta puede salir vacía. En ese caso hacemos fallback al
     `reasoning_content` que suele contener el JSON intermedio.
     """
-    chat = get_chat_model(cfg)
+    chat = get_chat_model_with_fallback(cfg)
     messages = [SystemMessage(content=system), HumanMessage(content=user)]
     last_exc: Exception | None = None
     for attempt in range(max_retries + 1):
